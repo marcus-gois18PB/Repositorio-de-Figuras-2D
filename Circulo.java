@@ -1,3 +1,5 @@
+
+
 public class Circulo implements FiguraGeometrica2D {
 
     private double raio;
@@ -13,14 +15,19 @@ public class Circulo implements FiguraGeometrica2D {
 
     @Override
     public double area() {
-        return 0;
+        return Math.PI * Math.pow(raio, 2) 
     }
 
     @Override
     public double perimetro() {
-        return 0;
+        return 2* Math.PI * raio;
+        
     }
-
+    @Override 
+    public String getTipo() {
+       return "Circulo";
+    }
+   
     public double getRaio() {
         return raio;
     }
