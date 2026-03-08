@@ -1,51 +1,63 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class RepositorioDeFiguras2D {
-    List<FiguraGeometrica2D> FiguraGeometricas = new ArrayList<>();
-    Scanner scanner = new Scanner(System.in);
 
+    private List<FiguraGeometrica2D> figuras = new ArrayList<>();
 
-    public double adicionaFigura(double area, double perimetro){
-    FiguraGeometrica2D figuranova2D = new FiguraGeometrica2D() {
-
-        @Override
-        public double area() {
-            return 0;
-        }
-
-        @Override
-        public double perimetro() {
-            return 0;
-        }
-    };
-        return 0;
-         }
-
-
-     public int removeFigura(int indice) {
-    if (indice <= 0 && indice < FiguraGeometricas.size()) {
-        FiguraGeometricas.remove(indice);
-
-
+    // Adiciona uma figura e retorna o índice onde foi inserida
+    public int adicionaFigura(FiguraGeometrica2D fig) {
+        figuras.add(fig);
+        return figuras.size() - 1;
     }
 
-         return 0;
-     }
-     public String MostrarFiguras(String Buscar){
-         for (FiguraGeometrica2D a : FiguraGeometricas){
+    // Remove a figura na posição informada e a retorna
+    public FiguraGeometrica2D removeFigura(int i) {
+        if (i >= 0 && i < figuras.size()) {
+            return figuras.remove(i);
+        }
+        throw new IndexOutOfBoundsException("Posição inválida: " + i);
+    }
 
-     }
-return null;}
-     }
+    // Retorna uma String com a listagem de todas as figuras
+    public String listaFiguras() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < figuras.size(); i++) {
+            FiguraGeometrica2D f = figuras.get(i);
+            sb.append("[").append(i).append("] ")
+              .append(f.tipo())
+              .append(" | Área: ").append(String.format("%.2f", f.area()))
+              .append(" | Perímetro: ").append(String.format("%.2f", f.perimetro()))
+              .append("\n");
+        }
+        return sb.toString();
+    }
 
+    // Retorna a área da figura na posição i
+    public double area(int i) {
+        if (i >= 0 && i < figuras.size()) {
+            return figuras.get(i).area();
+        }
+        throw new IndexOutOfBoundsException("Posição inválida: " + i);
+    }
 
+    // Retorna o perímetro da figura na posição i
+    public double perimetro(int i) {
+        if (i >= 0 && i < figuras.size()) {
+            return figuras.get(i).perimetro();
+        }
+        throw new IndexOutOfBoundsException("Posição inválida: " + i);
+    }
 
+    // Retorna o tipo da figura na posição i
+    public String tipo(int i) {
+        if (i >= 0 && i < figuras.size()) {
+            return figuras.get(i).tipo();
+        }
+        throw new IndexOutOfBoundsException("Posição inválida: " + i);
+    }
 
-
-
-
-
-
-
+    public int tamanho() {
+        return figuras.size();
+    }
+}
