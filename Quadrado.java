@@ -5,20 +5,22 @@ public class Quadrado implements FiguraGeometrica2D {
     private double lado;
 
     public Quadrado(double lado) {
-         this.lado = lado;
+        this.lado = lado;
+    }
 
-    }
-    public double getLado(double lado){
-        return lado;
-    }
     @Override
     public double area() {
-        return 0;
+        return lado * lado;
     }
 
     @Override
     public double perimetro() {
-        return 0;
+        return 4 * lado;
+    }
+
+    @Override
+    public String tipo() {
+        return "Quadrado";
     }
 
     public double getLado() {
@@ -31,9 +33,7 @@ public class Quadrado implements FiguraGeometrica2D {
 
     @Override
     public String toString() {
-        return "Quadrado{" +
-                "lado=" + lado +
-                '}';
+        return "Quadrado{lado=" + lado + "}";
     }
 
     @Override
