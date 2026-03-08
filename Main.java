@@ -2,70 +2,79 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        RepositorioDeFiguras2D repositorio = new RepositorioDeFiguras2D();
-        int opcao = 0;
 
-        while (opcao != 5) {
-            System.out.println("\n--- Repositório de Figuras 2D ---");
-            System.out.println("1. Adicionar Círculo");
-            System.out.println("2. Adicionar Quadrado");
-            System.out.println("3. Listar todas as figuras (Área e Perímetro)");
-            System.out.println("4. Remover figura pela posição");
-            System.out.println("5. Sair");
+        RepositorioDeFiguras2D repo = new RepositorioDeFiguras2D();
+        Scanner scanner = new Scanner(System.in);
+        int opcao;
+
+        do {
+            System.out.println("\n========== MENU ==========");
+            System.out.println("1 - Adicionar Quadrado");
+            System.out.println("2 - Adicionar Círculo");
+            System.out.println("3 - Listar figuras");
+            System.out.println("4 - Consultar área");
+            System.out.println("5 - Consultar perímetro");
+            System.out.println("6 - Consultar tipo");
+            System.out.println("7 - Remover figura");
+            System.out.println("0 - Sair");
             System.out.print("Escolha uma opção: ");
-            
             opcao = scanner.nextInt();
 
-            if (opcao == 1) {
-                System.out.print("Digite o raio do círculo: ");
-                double raio = scanner.nextDouble();
-                
-                // Polimorfismo: A interface FiguraGeometrica2D aponta para um Círculo
-                FiguraGeometrica2D novaFigura = new Circulo(raio);
-                repositorio.adicionaFigura(novaFigura);
-                System.out.println("Círculo adicionado com sucesso!");
+            switch (opcao) {
+                case 1:
+                    System.out.print("Digite o lado do quadrado: ");
+                    double lado = scanner.nextDouble();
+                    int posQ = repo.adicionaFigura(new Quadrado(lado));
+                    System.out.println("Quadrado adicionado na posição " + posQ + ".");
+                    break;
 
-            } else if (opcao == 2) {
-                System.out.print("Digite o lado do quadrado: ");
-                double lado = scanner.nextDouble();
-                
-                // Polimorfismo: A mesma interface agora aponta para um Quadrado
-                FiguraGeometrica2D novaFigura = new Quadrado(lado);
-                repositorio.adicionaFigura(novaFigura);
-                System.out.println("Quadrado adicionado com sucesso!");
+                case 2:
+                    System.out.print("Digite o raio do círculo: ");
+                    double raio = scanner.nextDouble();
+                    int posC = repo.adicionaFigura(new Circulo(raio));
+                    System.out.println("Círculo adicionado na posição " + posC + ".");
+                    break;
 
-            } else if (opcao == 3) {
-                int total = repositorio.getQuantidadeDeFiguras();
-                if (total == 0) {
-                    System.out.println("O repositório está vazio.");
-                } else {
-                    System.out.println("\n--- Lista de Figuras ---");
-                    for (int i = 0; i < total; i++) {
-                        // O polimorfismo acontece lá dentro do repositório!
-                        // Não precisamos saber se é círculo ou quadrado para pedir a área.
-                        String tipo = repositorio.recuperarTipo(i);
-                        double area = repositorio.recuperarArea(i);
-                        double perimetro = repositorio.recuperarPerimetro(i);
+                case 3:
+                    System.out.println("\n=== Figuras no repositório ===");
+                    String lista = repo.listaFiguras();
+                    System.out.print(lista.isEmpty() ? "Repositório vazio.\n" : lista);
+                    break;
 
-                        // Imprimindo os dados formatados
-                        System.out.printf("Posição %d: %s | Área: %.2f | Perímetro: %.2f\n", 
-                                          i, tipo, area, perimetro);
-                    }
-                }
+                case 4:
+                    System.out.print("Digite a posição da figura: ");
+                    int posArea = scanner.nextInt();
+                    System.out.printf("Área: %.2f%n", repo.area(posArea));
+                    break;
 
-            } else if (opcao == 4) {
-                System.out.print("Digite a posição da figura que deseja remover: ");
-                int posicao = scanner.nextInt();
-                repositorio.removeFigura(posicao);
-                System.out.println("Comando de remoção executado.");
+                case 5:
+                    System.out.print("Digite a posição da figura: ");
+                    int posPerimetro = scanner.nextInt();
+                    System.out.printf("Perímetro: %.2f%n", repo.perimetro(posPerimetro));
+                    break;
 
-            } else if (opcao == 5) {
-                System.out.println("Saindo do programa...");
-            } else {
-                System.out.println("Opção inválida! Tente novamente.");
+                case 6:
+                    System.out.print("Digite a posição da figura: ");
+                    int posTipo = scanner.nextInt();
+                    System.out.println("Tipo: " + repo.tipo(posTipo));
+                    break;
+
+                case 7:
+                    System.out.print("Digite a posição da figura a remover: ");
+                    int posRemover = scanner.nextInt();
+                    FiguraGeometrica2D removida = repo.removeFigura(posRemover);
+                    System.out.println("Figura removida: " + removida);
+                    break;
+
+                case 0:
+                    System.out.println("Encerrando programa...");
+                    break;
+
+                default:
+                    System.out.println("Opção inválida! Tente novamente.");
             }
-        }
+
+        } while (opcao != 0);
 
         scanner.close();
     }
