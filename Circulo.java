@@ -1,33 +1,26 @@
 
 
-public class Circulo implements FiguraGeometrica2D {
-
-    private double raio;
+private double raio;
 
     public Circulo(double raio) {
         this.raio = raio;
-
     }
-
-    public double getRaio(double raio){
-        return raio;
-   }
 
     @Override
     public double area() {
-        return Math.PI * Math.pow(raio, 2) 
+        return Math.PI * raio * raio;
     }
 
     @Override
     public double perimetro() {
-        return 2* Math.PI * raio;
-        
+        return 2 * Math.PI * raio;
     }
-    @Override 
-    public String getTipo() {
-       return "Circulo";
+
+    @Override
+    public String tipo() {
+        return "Círculo";
     }
-   
+
     public double getRaio() {
         return raio;
     }
@@ -36,4 +29,8 @@ public class Circulo implements FiguraGeometrica2D {
         this.raio = raio;
     }
 
+    @Override
+    public String toString() {
+        return "Circulo{raio=" + raio + "}";
+    }
 }
